@@ -18,6 +18,7 @@ if has("unnamedplus")
 elseif has("clipboard")
   set clipboard=unnamed
 endif
+inoremap jk <Esc>
 
 "TAB SPACING
 autocmd Filetype python setlocal ts=4 sts=4 sw=4 expandtab
@@ -83,4 +84,3 @@ au FileType go nmap <leader>c <Plug>(go-coverage)
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 " narrow the list down with a word under cursor
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-
