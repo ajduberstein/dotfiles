@@ -35,3 +35,4 @@ bindkey -v
 bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
 alias gr="pushd $(git rev-parse --show-toplevel)"
+alias gbi="go build -i"
