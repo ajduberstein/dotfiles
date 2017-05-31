@@ -1,38 +1,23 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-" VUNDLE
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/syntastic'
-" Plugin 'L9'
-" Fuzzy serach for filename
-Plugin 'kien/ctrlp.vim'
-" Golang plugin
-Plugin 'fatih/vim-go'
-" Search for a string
-Plugin 'mileszs/ack.vim'
-" File explorer
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-" Git plugin
-Plugin 'tpope/vim-fugitive'
-" Python autocomplete and docs
-Plugin 'davidhalter/jedi-vim'
-" Javascript autocomplet and docs
-Plugin 'ternjs/tern_for_vim'
-" Delimiters
-Plugin 'Raimondi/delimitMate'
-" Autocomplete
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 filetype plugin indent on    " required
+
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'crusoexia/vim-monokai'
+Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'nsf/gocode'
+Plug 'Raimondi/delimitMate'
+Plug 'nvie/vim-flake8'
+Plug 'davidhalter/jedi-vim'
+call plug#end()
+
 
 syntax on
 " Hide vim temp files
@@ -76,7 +61,9 @@ autocmd Filetype python let @a='import pytest; pytest.set_trace()'
 
 "NERDTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-map <leader><C-n> :NERDTreeToggle<CR>
+map <C-e> :NERDTreeToggle<CR>
+map <leader><C-f> :NERDTreeFind<cr>
+
 
 " ACK
 nmap <Leader><Leader> :Ack 
@@ -87,7 +74,7 @@ let g:ctrlp_cmd = 'CtrlP'
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/gradle/*,*/build/*,*/node_modules/*
 
-let g:ctrlp_custom_ignore = {'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$', 'file': '\v\.(exe|so|dll)$', 'link': 'some_bad_symbolic_links'}
+let g:ctrlp_custom_ignore = {'dir':  '\v[\/](\.git|\.hg|\.svn|node_modules)$', 'file': '\v\.(exe|so|dll|pyc)$', 'link': 'some_bad_symbolic_links'}
 
 "GOLANG
 au FileType go nmap <leader>r <Plug>(go-run)
@@ -100,4 +87,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 let g:ycm_min_num_of_chars_for_completion = 1
 
+set guioptions-=r 
+set guioptions-=L
+
+autocmd BufWritePost *.py call Flake8()
+
 inoremap jk <Esc>
+imap jk <Esc>
+let g:syntastic_javascript_checkers = ['eslint']
+let g:pymode_lint_config = '$HOME/pylint.rc'
+let g:pymode_lint_ignore = "E501"
+set autowrite
+
+autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
