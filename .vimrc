@@ -2,6 +2,16 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin indent on    " required
 
+function! BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py
+  endif
+endfunction
+
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
@@ -12,13 +22,20 @@ Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'nsf/gocode'
 Plug 'Raimondi/delimitMate'
 Plug 'nvie/vim-flake8'
 Plug 'davidhalter/jedi-vim'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
+Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plug 'nvie/vim-flake8'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 
+let python_highlight_all=1
 syntax on
 " Hide vim temp files
 set backupdir=~/vimtmp,.
@@ -34,6 +51,7 @@ set autoindent
 set backspace=indent,eol,start
 set history=1000
 set cursorline
+
 if has("unnamedplus")
   set clipboard=unnamedplus
 elseif has("clipboard")
@@ -102,3 +120,63 @@ set autowrite
 autocmd FileType python nnoremap <LocalLeader>= :0,$!yapf<CR>
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+set autowrite
+
+
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+
+" Tagbar support for go."
+let g:tagbar_type_go = {
+      \ 'ctagstype' : 'go',
+      \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+      \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+      \ },
+      \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+      \ },
+      \ 'ctagsbin'  : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
+
+
+" format with goimports instead of gofmt
+let g:go_fmt_command = "goimports"
+nnoremap <leader>gl :GoLint<CR>
+inoremap <leader>gl <ESC>:GoLint<CR>
+vnoremap <leader>gl <ESC>:GoLint<CR>
+
+
+" vim-go
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+
+" YCM/YouCompleteMe
+let g:ycm_min_num_of_chars_for_completion = 1
+
+let g:ycm_key_list_select_completion = ['<C-n>', '<Tab>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<s-Tab>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
