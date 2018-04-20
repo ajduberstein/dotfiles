@@ -10,7 +10,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias vi="vim"
 export EDITOR=vim
-set -o vi
+set -o emacs
 
 # Common aliases
 alias l="ls"
@@ -37,7 +37,7 @@ alias grm="git rebase master"
 bindkey -v
 bindkey '\e[3~' delete-char
 bindkey '^R' history-incremental-search-backward
-alias gr="pushd $(git rev-parse --show-toplevel)"
+alias gr="pushd $(git rev-parse --show-toplevel 2> /dev/null)"
 alias gbi="go build -i"
 
 # Docker aliases
