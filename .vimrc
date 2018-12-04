@@ -27,12 +27,10 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'davidhalter/jedi-vim'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
-Plug 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plug 'nvie/vim-flake8'
 Plug 'honza/vim-snippets'
 Plug 'leafgarland/typescript-vim'
 Plug 'zhou13/vim-easyescape'
-Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 
