@@ -2,11 +2,21 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin indent on    " required
 
+" function! BuildYCM(info)
+"   " info is a dictionary with 3 fields
+"   " - name:   name of the plugin
+"   " - status: 'installed', 'updated', or 'unchanged'
+"   " - force:  set on PlugInstall! or PlugUpdate!
+"   if a:info.status == 'installed' || a:info.force
+"     !./install.py
+"   endif
+" endfunction
+
+
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'crusoexia/vim-monokai'
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -14,12 +24,13 @@ Plug 'leshill/vim-json'
 Plug 'w0rp/ale'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'davidhalter/jedi-vim'
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'nvie/vim-flake8'
 Plug 'honza/vim-snippets'
 Plug 'leafgarland/typescript-vim'
 Plug 'zhou13/vim-easyescape'
+Plug 'crusoexia/vim-monokai'
+Plug 'yegappan/mru'
 call plug#end()
 
 
@@ -47,7 +58,7 @@ elseif has("clipboard")
 endif
 
 " MONOKAI
-syntax enable
+syntax on
 colorscheme monokai
 
 "TAB SPACING
@@ -63,6 +74,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>wc :%s/\(.\+\)/'\1',<cr>
 autocmd Filetype python let @a='import ipdb; ipdb.set_trace()  # noqa'
+autocmd Filetype javascript let @a='debugger; //eslint-disable-line'
 
 "NERDTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -173,3 +185,4 @@ imap <special> jk <Esc>
 imap <special> kj <Esc>
 cnoremap jk <ESC>
 cnoremap kj <ESC>
+let g:ctrlp_working_path_mode = 0
