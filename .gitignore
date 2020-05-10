@@ -1,0 +1,6 @@
+.*.swo
+.*.swp
+ignore__*
+env/
+env3/
+.ipynb_checkpoints/
