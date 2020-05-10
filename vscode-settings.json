@@ -1,0 +1,50 @@
+{
+    "go.buildOnSave": true,
+    "go.lintOnSave": true,
+    "go.vetOnSave": true,
+    "go.buildFlags": [],
+    "go.lintFlags": [],
+    "go.vetFlags": [],
+    "go.coverOnSave": false,
+    "go.useCodeSnippetsOnFunctionSuggest": false,
+    "go.formatOnSave": true,
+    "go.formatTool": "goreturns",
+    "editor.formatOnType": true,
+    "editor.scrollBeyondLastLine": false,
+    "files.exclude": {
+        "**/.tmp": true,
+        "vendor": true,
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "go-build/.go": true,
+        "**/*.test": true,
+        "Godeps/_workspace": true,
+        "**/coverage.html": true,
+        "**/_build": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.autoSave": "onFocusChange",
+    "python.disableInstallationCheck": true,
+    "window.zoomLevel": 0,
+    "vim.leader": ",",
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<esc>"
+            ]
+        }
+    ],
+    "window.title": "${activeEditorLong}${separator}${rootName}",
+    "vim.useSystemClipboard": true,
+    "editor.formatOnSave": true,
+    "prettier.requireConfig": true,
+    "eslint.alwaysShowStatus": true,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.codeActionsOnSave": null
+}
