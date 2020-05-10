@@ -1,3 +1,4 @@
+" VIM - Vi IMproved 8.1 (2018 May 18, compiled Jul 16 2019 03:25:28)
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin indent on    " required
@@ -16,7 +17,6 @@ filetype plugin indent on    " required
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'fatih/vim-go'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -31,6 +31,25 @@ Plug 'leafgarland/typescript-vim'
 Plug 'zhou13/vim-easyescape'
 Plug 'crusoexia/vim-monokai'
 Plug 'yegappan/mru'
+Plug 'sbdchd/neoformat'
+Plug '/usr/local/opt/fzf'
+Plug 'psf/black'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript',
+    \ 'typescript',
+    \ 'css',
+    \ 'less',
+    \ 'scss',
+    \ 'json',
+    \ 'graphql',
+    \ 'markdown',
+    \ 'vue',
+    \ 'lua',
+    \ 'php',
+    \ 'html'] }
 call plug#end()
 
 
@@ -64,6 +83,7 @@ colorscheme monokai
 "TAB SPACING
 autocmd Filetype python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=0 sw=2 expandtab
+autocmd Filetype html setlocal ts=2 sts=0 sw=2 expandtab
 autocmd Filetype go setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype sh setlocal ts=2 sts=2 sw=2 expandtab
 
@@ -74,19 +94,18 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>wc :%s/\(.\+\)/'\1',<cr>
 autocmd Filetype python let @a='import ipdb; ipdb.set_trace()  # noqa'
-autocmd Filetype javascript let @a='debugger; //eslint-disable-line'
+autocmd Filetype javascript let @a='debugger; // eslint-disable-line'
 
 "NERDTREE
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 map <C-e> :NERDTreeToggle<CR>
 map <leader><C-f> :NERDTreeFind<cr>
-"
+
 " ACK
 nmap <Leader><Leader> :Ack 
 
-"CTRLP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+" FZF
+nmap <c-p> :FZF<CR>
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/gradle/*,*/build/*,*/node_modules/*
 
@@ -172,7 +191,11 @@ let g:ale_fixers = {
 \   'sass': ['sass-lint'],
 \   'scss': ['sass-lint'],
 \   'javascript': ['prettier'],
+\   'jsx': ['prettier'],
 \}
+
+
+let g:prettier#autoformat = 0
 
 let g:ale_fix_on_save = 1
 
@@ -185,4 +208,3 @@ imap <special> jk <Esc>
 imap <special> kj <Esc>
 cnoremap jk <ESC>
 cnoremap kj <ESC>
-let g:ctrlp_working_path_mode = 0
